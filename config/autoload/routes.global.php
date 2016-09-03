@@ -9,9 +9,15 @@ return [
     ],
     'routes' => [
         [
-            'name' => 'home',
-            'path' => '/',
-            'middleware' => App\Action\HomePageAction::class,
+            'name' => 'check-out',
+            'path' => '/book/{id}/check-out',
+            'middleware' => App\Action\CheckOutAction::class,
+            'allowed_methods' => ['GET'],
+        ],
+        [
+            'name' => 'check-in',
+            'path' => '/book/{id}/check-in',
+            'middleware' => App\Action\CheckInAction::class,
             'allowed_methods' => ['GET'],
         ],
     ],
