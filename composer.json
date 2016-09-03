@@ -10,17 +10,18 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.0",
         "roave/security-advisories": "dev-master",
         "zendframework/zend-expressive": "^1.0",
         "zendframework/zend-expressive-helpers": "^2.0",
-        "zendframework/zend-stdlib": "^2.7 || ^3.0",
-        "zendframework/zend-expressive-fastroute": "^1.0",
-        "zendframework/zend-servicemanager": "^2.7.3 || ^3.0"
+        "zendframework/zend-stdlib": "^3.0",
+        "zendframework/zend-expressive-fastroute": "^1.2",
+        "zendframework/zend-servicemanager": "^3.1",
+        "ramsey/uuid": "^3.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8",
-        "squizlabs/php_codesniffer": "^2.3"
+        "phpunit/phpunit": "^5.5",
+        "squizlabs/php_codesniffer": "^2.6"
     },
     "autoload": {
         "psr-4": {
