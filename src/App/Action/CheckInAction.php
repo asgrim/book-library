@@ -6,6 +6,7 @@ namespace App\Action;
 use App\Entity\Exception\BookAlreadyStocked;
 use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
@@ -19,9 +20,15 @@ final class CheckInAction implements MiddlewareInterface
      */
     private $findBookByUuid;
 
-    public function __construct(FindBookByUuidInterface $findBookByUuid)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    public function __construct(FindBookByUuidInterface $findBookByUuid, EntityManagerInterface $entityManager)
     {
         $this->findBookByUuid = $findBookByUuid;
+        $this->entityManager = $entityManager;
     }
 
     public function __invoke(
@@ -37,7 +44,9 @@ final class CheckInAction implements MiddlewareInterface
         }
 
         try {
-            $book->checkIn();
+            $this->entityManager->transactional(function () use ($book) {
+                $book->checkIn();
+            });
         } catch (BookAlreadyStocked $bookAlreadyStocked) {
             return new JsonResponse(['info' => $bookAlreadyStocked->getMessage()], 423);
         }

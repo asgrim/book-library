@@ -7,6 +7,7 @@ use App\Action\CheckOutAction;
 use App\Entity\Book;
 use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
@@ -27,7 +28,10 @@ final class CheckOutActionTest extends \PHPUnit_Framework_TestCase
             ->with($uuid)
             ->willThrowException(BookNotFound::fromUuid($uuid));
 
-        $action = new CheckOutAction($findBookByUuid);
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager->expects(self::never())->method('transactional');
+
+        $action = new CheckOutAction($findBookByUuid, $entityManager);
 
         /** @var Response\JsonResponse $response */
         $response = $action(
@@ -49,7 +53,10 @@ final class CheckOutActionTest extends \PHPUnit_Framework_TestCase
         $findBookByUuid = $this->createMock(FindBookByUuidInterface::class);
         $findBookByUuid->expects(self::once())->method('__invoke')->with($book->getId())->willReturn($book);
 
-        $action = new CheckOutAction($findBookByUuid);
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager->expects(self::once())->method('transactional')->willReturnCallback('call_user_func');
+
+        $action = new CheckOutAction($findBookByUuid, $entityManager);
 
         /** @var Response\JsonResponse $response */
         $response = $action(
@@ -70,7 +77,10 @@ final class CheckOutActionTest extends \PHPUnit_Framework_TestCase
         $findBookByUuid = $this->createMock(FindBookByUuidInterface::class);
         $findBookByUuid->expects(self::once())->method('__invoke')->with($book->getId())->willReturn($book);
 
-        $action = new CheckOutAction($findBookByUuid);
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager->expects(self::once())->method('transactional')->willReturnCallback('call_user_func');
+
+        $action = new CheckOutAction($findBookByUuid, $entityManager);
 
         /** @var Response\JsonResponse $response */
         $response = $action(
