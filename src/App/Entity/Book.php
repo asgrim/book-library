@@ -3,21 +3,31 @@ declare(strict_types = 1);
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="book")
+ */
 final class Book
 {
     /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="guid")
+     * @ORM\GeneratedValue(strategy="NONE")
      * @var string
      */
     private $id;
 
     /**
+     * @ORM\Column(name="name", type="string", length=1024, nullable=false, unique=true)
      * @var string
      */
     private $name;
 
     /**
+     * @ORM\Column(name="in_stock", type="boolean", nullable=false)
      * @var bool
      */
     private $inStock = true;
