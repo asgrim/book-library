@@ -4,4 +4,13 @@ declare(strict_types=1);
 return [
     'debug' => true,
     'config_cache_enabled' => false,
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
+                'params' => [
+                    'url' => 'postgres://user:pass@host/dbname', // Configure this...
+                ],
+            ],
+        ],
+    ],
 ];
