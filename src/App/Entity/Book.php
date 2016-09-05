@@ -13,18 +13,35 @@ final class Book
     private $id;
 
     /**
+     * @var string
+     */
+    private $name;
+
+    /**
      * @var bool
      */
     private $inStock = true;
 
-    public function __construct()
+    private function __construct()
     {
         $this->id = (string)Uuid::uuid4();
+    }
+
+    public static function fromName(string $name) : self
+    {
+        $book = new self();
+        $book->name = $name;
+        return $book;
     }
 
     public function getId() : string
     {
         return $this->id;
+    }
+
+    public function getName() : string
+    {
+        return $this->name;
     }
 
     /**

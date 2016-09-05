@@ -15,13 +15,19 @@ final class BookTest extends \PHPUnit_Framework_TestCase
 {
     public function testIdReturnsValidUuidString()
     {
-        $book = new Book();
+        $book = Book::fromName('foo');
         self::assertSame($book->getId(), (string)Uuid::fromString($book->getId()));
+    }
+
+    public function testGetName()
+    {
+        $book = Book::fromName('foo');
+        self::assertSame('foo', $book->getName());
     }
 
     public function testExceptionIsThrownWhenBookCheckedOutTwice()
     {
-        $book = new Book();
+        $book = Book::fromName('foo');
 
         $this->expectException(BookNotAvailable::class);
         $book->checkOut();
@@ -30,7 +36,7 @@ final class BookTest extends \PHPUnit_Framework_TestCase
 
     public function testExceptionIsThrownWhenBookCheckedInTwice()
     {
-        $book = new Book();
+        $book = Book::fromName('foo');
 
         $this->expectException(BookAlreadyStocked::class);
         $book->checkIn();
@@ -39,7 +45,7 @@ final class BookTest extends \PHPUnit_Framework_TestCase
 
     public function testBookCanBeCheckedOutAndBackIn()
     {
-        $book = new Book();
+        $book = Book::fromName('foo');
         $book->checkOut();
         $book->checkIn();
         $book->checkOut();

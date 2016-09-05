@@ -13,9 +13,9 @@ final class BookAlreadyStockedTest extends \PHPUnit_Framework_TestCase
 {
     public function testFromUuid()
     {
-        $exception = BookAlreadyStocked::fromBook(new Book());
+        $exception = BookAlreadyStocked::fromBook(Book::fromName('foo'));
 
         self::assertInstanceOf(BookAlreadyStocked::class, $exception);
-        self::assertStringMatchesFormat('Book with UUID %s is already in stock', $exception->getMessage());
+        self::assertStringMatchesFormat('%s is already in stock', $exception->getMessage());
     }
 }

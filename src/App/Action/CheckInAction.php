@@ -43,7 +43,7 @@ final class CheckInAction implements MiddlewareInterface
         }
 
         return new JsonResponse([
-            'info' => sprintf('You have checked in %s', $book->getId()),
+            'info' => sprintf('You have checked in %s', $book->getName()),
         ]);
     }
 }

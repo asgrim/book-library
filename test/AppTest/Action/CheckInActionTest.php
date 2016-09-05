@@ -43,7 +43,7 @@ final class CheckInActionTest extends \PHPUnit_Framework_TestCase
 
     public function testResponseIs423WhenBookAlreadyCheckedIn()
     {
-        $book = new Book();
+        $book = Book::fromName('foo');
 
         $findBookByUuid = $this->createMock(FindBookByUuidInterface::class);
         $findBookByUuid->expects(self::once())->method('__invoke')->with($book->getId())->willReturn($book);
@@ -64,7 +64,7 @@ final class CheckInActionTest extends \PHPUnit_Framework_TestCase
 
     public function testResponseIs200WhenBookSuccessfullyCheckedOut()
     {
-        $book = new Book();
+        $book = Book::fromName('foo');
         $book->checkOut();
 
         $findBookByUuid = $this->createMock(FindBookByUuidInterface::class);

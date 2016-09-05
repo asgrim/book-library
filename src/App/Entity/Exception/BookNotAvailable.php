@@ -9,6 +9,6 @@ final class BookNotAvailable extends \DomainException
 {
     public static function fromBook(Book $book) : self
     {
-        return new self(sprintf('Book with UUID %s is not available', $book->getId()));
+        return new self(sprintf('%s is not available', $book->getName()));
     }
 }

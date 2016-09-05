@@ -43,7 +43,7 @@ final class CheckOutAction implements MiddlewareInterface
         }
 
         return new JsonResponse([
-            'info' => sprintf('You have checked out %s', $book->getId()),
+            'info' => sprintf('You have checked out %s', $book->getName()),
         ]);
     }
 }
