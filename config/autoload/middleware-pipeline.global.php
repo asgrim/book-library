@@ -22,6 +22,7 @@ return [
             'middleware' => [
                 ApplicationFactory::ROUTING_MIDDLEWARE,
                 Helper\UrlHelperMiddleware::class,
+                App\Middleware\AuthenticationMiddleware::class,
                 ApplicationFactory::DISPATCH_MIDDLEWARE,
             ],
             'priority' => 1,
