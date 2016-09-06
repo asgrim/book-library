@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2b2ce9eb0a1d824f6aacfa8031285893",
-    "content-hash": "3a5e2444b577e8c1e1bb60d0acf14cce",
+    "hash": "d5f16fc2bb7b002459505af8dc9879a6",
+    "content-hash": "bc281edd3f067c5105cc2ac3387c6bf1",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -72,6 +72,58 @@
             "description": "Doctrine factories for container-interop",
             "homepage": "https://github.com/DASPRiD/container-interop-doctrine",
             "time": "2016-03-03 09:59:32"
+        },
+        {
+            "name": "dflydev/fig-cookies",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-fig-cookies.git",
+                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-fig-cookies/zipball/883233c159d00d39e940bd12cfe42c0d23420c1c",
+                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "psr/http-message": "~1.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "~0.1@dev",
+                "phpunit/phpunit": "~4.5",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dflydev\\FigCookies\\": "src/Dflydev/FigCookies"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com"
+                }
+            ],
+            "description": "Cookies for PSR-7 HTTP Message Interface.",
+            "keywords": [
+                "cookies",
+                "psr-7",
+                "psr7"
+            ],
+            "time": "2016-03-28 09:10:18"
         },
         {
             "name": "doctrine/annotations",
@@ -673,6 +725,64 @@
             "time": "2016-01-05 21:34:58"
         },
         {
+            "name": "lcobucci/jwt",
+            "version": "3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lcobucci/jwt.git",
+                "reference": "7668cb045296f290588d04c391569c7b7fc1f899"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/7668cb045296f290588d04c391569c7b7fc1f899",
+                "reference": "7668cb045296f290588d04c391569c7b7fc1f899",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "mdanter/ecc": "~0.3.1",
+                "mikey179/vfsstream": "~1.5",
+                "phpmd/phpmd": "~2.2",
+                "phpunit/php-invoker": "~1.1",
+                "phpunit/phpunit": "~4.5",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "suggest": {
+                "mdanter/ecc": "Required to use Elliptic Curves based algorithms."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lcobucci\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Luís Otávio Cobucci Oblonczyk",
+                    "email": "lcobucci@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to work with JSON Web Token and JSON Web Signature",
+            "keywords": [
+                "JWS",
+                "jwt"
+            ],
+            "time": "2016-08-13 23:12:58"
+        },
+        {
             "name": "nikic/fast-route",
             "version": "v1.0.1",
             "source": {
@@ -714,6 +824,65 @@
                 "routing"
             ],
             "time": "2016-06-12 19:08:51"
+        },
+        {
+            "name": "ocramius/psr7-session",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ocramius/PSR7Session.git",
+                "reference": "94bcd47b4f90c05b56839c138c134f3975aa0046"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ocramius/PSR7Session/zipball/94bcd47b4f90c05b56839c138c134f3975aa0046",
+                "reference": "94bcd47b4f90c05b56839c138c134f3975aa0046",
+                "shasum": ""
+            },
+            "require": {
+                "dflydev/fig-cookies": "^1.0",
+                "lcobucci/jwt": "^3.1",
+                "php": "~7.0",
+                "psr/http-message": "^1.0",
+                "zendframework/zend-stratigility": "^1.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0",
+                "zendframework/zend-diactoros": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PSR7Session\\": "src/PSR7Session"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luís Otávio Cobucci Oblonczyk",
+                    "email": "lcobucci@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Jefersson Nathan",
+                    "email": "malukenho@phpse.net"
+                },
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.io/",
+                    "role": "Developer"
+                }
+            ],
+            "time": "2016-05-29 13:39:13"
         },
         {
             "name": "paragonie/random_compat",
