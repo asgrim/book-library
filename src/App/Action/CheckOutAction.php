@@ -6,6 +6,7 @@ namespace App\Action;
 use App\Entity\Exception\BookNotAvailable;
 use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
+use App\Service\GetIncrementedCounterFromRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -37,10 +38,12 @@ final class CheckOutAction implements MiddlewareInterface
         callable $next = null
     ) : JsonResponse
     {
+        $counter = (new GetIncrementedCounterFromRequest())->__invoke($request);
+
         try {
             $book = $this->findBookByUuid->__invoke(Uuid::fromString($request->getAttribute('id')));
         } catch (BookNotFound $bookNotFound) {
-            return new JsonResponse(['info' => $bookNotFound->getMessage()], 404);
+            return new JsonResponse(['info' => $bookNotFound->getMessage(), 'counter' => $counter], 404);
         }
 
         try {
@@ -48,11 +51,12 @@ final class CheckOutAction implements MiddlewareInterface
                 $book->checkOut();
             });
         } catch (BookNotAvailable $bookNotAvailable) {
-            return new JsonResponse(['info' => $bookNotAvailable->getMessage()], 423);
+            return new JsonResponse(['info' => $bookNotAvailable->getMessage(), 'counter' => $counter], 423);
         }
 
         return new JsonResponse([
             'info' => sprintf('You have checked out %s', $book->getName()),
+            'counter' => $counter,
         ]);
     }
 }
