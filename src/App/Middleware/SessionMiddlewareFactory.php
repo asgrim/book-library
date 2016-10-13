@@ -11,6 +11,9 @@ use PSR7Session\Time\SystemCurrentTime;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Lcobucci\JWT\Signer;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class SessionMiddlewareFactory implements FactoryInterface
 {
     /**

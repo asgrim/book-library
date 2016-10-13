@@ -8,6 +8,8 @@ use App\Entity\Book;
 use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use PSR7Session\Http\SessionMiddleware;
+use PSR7Session\Session\SessionInterface;
 use Ramsey\Uuid\Uuid;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
@@ -35,7 +37,9 @@ final class CheckInActionTest extends \PHPUnit_Framework_TestCase
 
         /** @var Response\JsonResponse $response */
         $response = $action(
-            (new ServerRequest(['/']))->withAttribute('id', $uuid),
+            (new ServerRequest(['/']))
+                ->withAttribute('id', $uuid)
+                ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
             new Response(),
             function () {
             }
@@ -59,7 +63,9 @@ final class CheckInActionTest extends \PHPUnit_Framework_TestCase
 
         /** @var Response\JsonResponse $response */
         $response = $action(
-            (new ServerRequest(['/']))->withAttribute('id', $book->getId()),
+            (new ServerRequest(['/']))
+                ->withAttribute('id', $book->getId())
+                ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
             new Response(),
             function () {
             }
@@ -84,7 +90,9 @@ final class CheckInActionTest extends \PHPUnit_Framework_TestCase
 
         /** @var Response\JsonResponse $response */
         $response = $action(
-            (new ServerRequest(['/']))->withAttribute('id', $book->getId()),
+            (new ServerRequest(['/']))
+                ->withAttribute('id', $book->getId())
+                ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
             new Response(),
             function () {
             }
