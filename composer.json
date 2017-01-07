@@ -12,7 +12,7 @@
     "require": {
         "php": "^7.0",
         "roave/security-advisories": "dev-master",
-        "zendframework/zend-expressive": "^1.0",
+        "zendframework/zend-expressive": "dev-develop",
         "zendframework/zend-expressive-helpers": "^2.2",
         "zendframework/zend-stdlib": "^3.1",
         "zendframework/zend-expressive-fastroute": "^1.3",
