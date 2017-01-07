@@ -8,6 +8,7 @@ use App\Entity\Book;
 use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Interop\Http\Middleware\DelegateInterface;
 use PSR7Session\Http\SessionMiddleware;
 use PSR7Session\Session\SessionInterface;
 use Ramsey\Uuid\Uuid;
@@ -36,13 +37,11 @@ final class CheckInActionTest extends \PHPUnit_Framework_TestCase
         $action = new CheckInAction($findBookByUuid, $entityManager);
 
         /** @var Response\JsonResponse $response */
-        $response = $action(
+        $response = $action->process(
             (new ServerRequest(['/']))
                 ->withAttribute('id', $uuid)
                 ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
-            new Response(),
-            function () {
-            }
+            $this->createMock(DelegateInterface::class)
         );
 
         self::assertInstanceOf(Response\JsonResponse::class, $response);
@@ -62,13 +61,11 @@ final class CheckInActionTest extends \PHPUnit_Framework_TestCase
         $action = new CheckInAction($findBookByUuid, $entityManager);
 
         /** @var Response\JsonResponse $response */
-        $response = $action(
+        $response = $action->process(
             (new ServerRequest(['/']))
                 ->withAttribute('id', $book->getId())
                 ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
-            new Response(),
-            function () {
-            }
+            $this->createMock(DelegateInterface::class)
         );
 
         self::assertInstanceOf(Response\JsonResponse::class, $response);
@@ -89,13 +86,11 @@ final class CheckInActionTest extends \PHPUnit_Framework_TestCase
         $action = new CheckInAction($findBookByUuid, $entityManager);
 
         /** @var Response\JsonResponse $response */
-        $response = $action(
+        $response = $action->process(
             (new ServerRequest(['/']))
                 ->withAttribute('id', $book->getId())
                 ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
-            new Response(),
-            function () {
-            }
+            $this->createMock(DelegateInterface::class)
         );
 
         self::assertInstanceOf(Response\JsonResponse::class, $response);

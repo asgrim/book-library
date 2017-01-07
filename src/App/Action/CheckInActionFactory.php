@@ -12,7 +12,7 @@ use Interop\Container\ContainerInterface;
  */
 final class CheckInActionFactory
 {
-    public function __invoke(ContainerInterface $container) : callable
+    public function __invoke(ContainerInterface $container) : CheckInAction
     {
         return new CheckInAction(
             $container->get(FindBookByUuidInterface::class),

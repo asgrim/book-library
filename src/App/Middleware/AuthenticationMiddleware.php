@@ -3,18 +3,19 @@ declare(strict_types = 1);
 
 namespace App\Middleware;
 
+use Interop\Http\Middleware\DelegateInterface;
+use Interop\Http\Middleware\ServerMiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\JsonResponse;
-use Zend\Stratigility\MiddlewareInterface;
 
-final class AuthenticationMiddleware implements MiddlewareInterface
+final class AuthenticationMiddleware implements ServerMiddlewareInterface
 {
     /**
      * {@inheritdoc}
      * @throws \InvalidArgumentException
      */
-    public function __invoke(Request $request, Response $response, callable $out = null) : Response
+    public function process(ServerRequestInterface $request, DelegateInterface $delegate) : Response
     {
         $queryParams = $request->getQueryParams();
 
@@ -24,6 +25,6 @@ final class AuthenticationMiddleware implements MiddlewareInterface
             return new JsonResponse(['error' => 'You are not authenticated.'], 403);
         }
 
-        return $out($request, $response);
+        return $delegate->process($request);
     }
 }
