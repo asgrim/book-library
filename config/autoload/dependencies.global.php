@@ -9,6 +9,8 @@ return [
     'dependencies' => [
         'invokables' => [
             Helper\ServerUrlHelper::class => Helper\ServerUrlHelper::class,
+            App\Middleware\AuthenticationMiddleware::class => App\Middleware\AuthenticationMiddleware::class,
+            App\Middleware\ErrorCatchingMiddleware::class => App\Middleware\ErrorCatchingMiddleware::class,
         ],
         'factories' => [
             Application::class => ApplicationFactory::class,

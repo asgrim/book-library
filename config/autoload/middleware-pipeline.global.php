@@ -22,6 +22,7 @@ return [
         ],
         'routing' => [
             'middleware' => [
+                App\Middleware\ErrorCatchingMiddleware::class,
                 ApplicationFactory::ROUTING_MIDDLEWARE,
                 App\Middleware\FlushingMiddleware::class,
                 Helper\UrlHelperMiddleware::class,
@@ -34,7 +35,6 @@ return [
         'error' => [
             'middleware' => [
             ],
-            'error'    => true,
             'priority' => -10000,
         ],
     ],
