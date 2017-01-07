@@ -10,7 +10,7 @@ use Ramsey\Uuid\Uuid;
  * @ORM\Entity
  * @ORM\Table(name="book")
  */
-final class Book
+class Book
 {
     /**
      * @ORM\Id
