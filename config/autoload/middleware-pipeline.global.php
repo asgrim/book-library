@@ -10,6 +10,7 @@ return [
             Helper\ServerUrlMiddleware::class => Helper\ServerUrlMiddlewareFactory::class,
             Helper\UrlHelperMiddleware::class => Helper\UrlHelperMiddlewareFactory::class,
             PSR7Session\Http\SessionMiddleware::class => App\Middleware\SessionMiddlewareFactory::class,
+            App\Middleware\FlushingMiddleware::class => App\Middleware\FlushingMiddlewareFactory::class
         ],
     ],
     'middleware_pipeline' => [
@@ -22,6 +23,7 @@ return [
         'routing' => [
             'middleware' => [
                 ApplicationFactory::ROUTING_MIDDLEWARE,
+                App\Middleware\FlushingMiddleware::class,
                 Helper\UrlHelperMiddleware::class,
                 PSR7Session\Http\SessionMiddleware::class,
                 App\Middleware\AuthenticationMiddleware::class,
