@@ -46,4 +46,17 @@ final class FlushingMiddlewareTest extends \PHPUnit_Framework_TestCase
             }
         ));
     }
+
+    public function testExceptionIsThrownWhenMiddlewareNotPipedCorrectly()
+    {
+        /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject $entityManager */
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Middleware passed to App\Middleware\FlushingMiddleware must be piped');
+        (new FlushingMiddleware($entityManager))->__invoke(
+            new ServerRequest(),
+            new Response()
+        );
+    }
 }

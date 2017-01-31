@@ -26,6 +26,10 @@ final class FlushingMiddleware implements MiddlewareInterface
      */
     public function __invoke(Request $request, Response $response, callable $out = null) : Response
     {
+        if (null === $out) {
+            throw new \InvalidArgumentException('Middleware passed to ' . __CLASS__ . ' must be piped');
+        }
+
         $response = $out($request, $response);
 
         if ($this->entityManager->isOpen()) {
