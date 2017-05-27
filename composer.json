@@ -12,15 +12,21 @@
     "require": {
         "php": "^7.0",
         "roave/security-advisories": "dev-master",
-        "zendframework/zend-expressive": "dev-develop",
-        "zendframework/zend-expressive-helpers": "^2.2",
+        "zendframework/zend-expressive": "^2.0.3",
+        "zendframework/zend-expressive-helpers": "^4.0",
         "zendframework/zend-stdlib": "^3.1",
-        "zendframework/zend-expressive-fastroute": "^1.3",
-        "zendframework/zend-servicemanager": "^3.2",
-        "ramsey/uuid": "^3.5",
-        "dasprid/container-interop-doctrine": "^0.2.2",
-        "psr7-sessions/storageless": "^2.0"
+        "zendframework/zend-expressive-fastroute": "^2.0",
+        "zendframework/zend-servicemanager": "^3.3",
+        "ramsey/uuid": "^3.6",
+        "dasprid/container-interop-doctrine": "^0.2.3",
+        "psr7-sessions/storageless": "dev-feature/psr-http-middleware"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/xtreamwayz/psr7-sessions-storageless"
+        }
+    ],
     "require-dev": {
         "phpunit/phpunit": "^5.7",
         "squizlabs/php_codesniffer": "^2.7"

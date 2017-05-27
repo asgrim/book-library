@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace App\Middleware;
 
-use Interop\Http\Middleware\DelegateInterface;
-use Interop\Http\Middleware\ServerMiddlewareInterface;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\JsonResponse;
 
-final class AuthenticationMiddleware implements ServerMiddlewareInterface
+final class AuthenticationMiddleware implements MiddlewareInterface
 {
     /**
      * {@inheritdoc}

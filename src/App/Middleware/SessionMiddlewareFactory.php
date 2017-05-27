@@ -6,8 +6,8 @@ namespace App\Middleware;
 use Dflydev\FigCookies\SetCookie;
 use Interop\Container\ContainerInterface;
 use Lcobucci\JWT\Parser;
-use PSR7Session\Http\SessionMiddleware;
-use PSR7Session\Time\SystemCurrentTime;
+use PSR7Sessions\Storageless\Http\SessionMiddleware;
+use PSR7Sessions\Storageless\Time\SystemCurrentTime;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Lcobucci\JWT\Signer;
 

@@ -8,13 +8,13 @@ use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
 use App\Service\GetIncrementedCounterFromRequest;
 use Doctrine\ORM\EntityManagerInterface;
-use Interop\Http\Middleware\DelegateInterface;
-use Interop\Http\Middleware\ServerMiddlewareInterface;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 use Zend\Diactoros\Response\JsonResponse;
 
-final class CheckOutAction implements ServerMiddlewareInterface
+final class CheckOutAction implements MiddlewareInterface
 {
     /**
      * @var FindBookByUuidInterface
