@@ -11,7 +11,7 @@ use Interop\Container\ContainerInterface;
  */
 final class FlushingMiddlewareFactory
 {
-    public function __invoke(ContainerInterface $container) : callable
+    public function __invoke(ContainerInterface $container) : FlushingMiddleware
     {
         return new FlushingMiddleware(
             $container->get(EntityManagerInterface::class)
