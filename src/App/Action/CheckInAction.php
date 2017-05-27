@@ -8,11 +8,11 @@ use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
 use App\Service\GetIncrementedCounterFromRequest;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Http\Message\ResponseInterface;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 use Zend\Diactoros\Response\JsonResponse;
-use Zend\Stratigility\MiddlewareInterface;
 
 final class CheckInAction implements MiddlewareInterface
 {
@@ -32,11 +32,7 @@ final class CheckInAction implements MiddlewareInterface
         $this->entityManager = $entityManager;
     }
 
-    public function __invoke(
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-        callable $next = null
-    ) : JsonResponse
+    public function process(ServerRequestInterface $request, DelegateInterface $delegate) : JsonResponse
     {
         $counter = (new GetIncrementedCounterFromRequest())->__invoke($request);
 

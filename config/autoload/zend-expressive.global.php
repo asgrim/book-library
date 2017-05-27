@@ -9,5 +9,6 @@ return [
             'template_404'   => 'error::404',
             'template_error' => 'error::error',
         ],
+        'raise_throwables' => true,
     ],
 ];

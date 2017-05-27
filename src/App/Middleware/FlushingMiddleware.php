@@ -4,9 +4,9 @@ declare(strict_types = 1);
 namespace App\Middleware;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Http\Message\ResponseInterface as Response;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Zend\Stratigility\MiddlewareInterface;
 
 final class FlushingMiddleware implements MiddlewareInterface
 {
@@ -20,17 +20,9 @@ final class FlushingMiddleware implements MiddlewareInterface
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     * @throws \InvalidArgumentException
-     */
-    public function __invoke(Request $request, Response $response, callable $out = null) : Response
+    public function process(Request $request, DelegateInterface $delegate)
     {
-        if (null === $out) {
-            throw new \InvalidArgumentException('Middleware passed to ' . __CLASS__ . ' must be piped');
-        }
-
-        $response = $out($request, $response);
+        $response = $delegate->process($request);
 
         if ($this->entityManager->isOpen()) {
             $this->entityManager->flush();
