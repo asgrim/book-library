@@ -5,6 +5,9 @@ namespace AppTest\Middleware;
 
 use App\Middleware\FlushingMiddleware;
 use Doctrine\ORM\EntityManagerInterface;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
 
@@ -21,11 +24,19 @@ final class FlushingMiddlewareTest extends \PHPUnit_Framework_TestCase
         $entityManager->expects(self::once())->method('flush');
 
         $expectedResponse = new Response();
-        self::assertSame($expectedResponse, (new FlushingMiddleware($entityManager))->__invoke(
+        self::assertSame($expectedResponse, (new FlushingMiddleware($entityManager))->process(
             new ServerRequest(),
-            new Response(),
-            function () use ($expectedResponse) {
-                return $expectedResponse;
+            new class ($expectedResponse) implements DelegateInterface {
+                private $fakeResponse;
+                public function __construct(ResponseInterface $fakeResponse)
+                {
+                    $this->fakeResponse = $fakeResponse;
+                }
+
+                public function process(ServerRequestInterface $request)
+                {
+                    return $this->fakeResponse;
+                }
             }
         ));
     }
@@ -38,25 +49,20 @@ final class FlushingMiddlewareTest extends \PHPUnit_Framework_TestCase
         $entityManager->expects(self::never())->method('flush');
 
         $expectedResponse = new Response();
-        self::assertSame($expectedResponse, (new FlushingMiddleware($entityManager))->__invoke(
+        self::assertSame($expectedResponse, (new FlushingMiddleware($entityManager))->process(
             new ServerRequest(),
-            new Response(),
-            function () use ($expectedResponse) {
-                return $expectedResponse;
+            new class ($expectedResponse) implements DelegateInterface {
+                private $fakeResponse;
+                public function __construct(ResponseInterface $fakeResponse)
+                {
+                    $this->fakeResponse = $fakeResponse;
+                }
+
+                public function process(ServerRequestInterface $request)
+                {
+                    return $this->fakeResponse;
+                }
             }
         ));
-    }
-
-    public function testExceptionIsThrownWhenMiddlewareNotPipedCorrectly()
-    {
-        /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject $entityManager */
-        $entityManager = $this->createMock(EntityManagerInterface::class);
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Middleware passed to App\Middleware\FlushingMiddleware must be piped');
-        (new FlushingMiddleware($entityManager))->__invoke(
-            new ServerRequest(),
-            new Response()
-        );
     }
 }
