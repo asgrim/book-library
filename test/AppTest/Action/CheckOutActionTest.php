@@ -9,6 +9,7 @@ use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
+use PHPUnit\Framework\TestCase;
 use PSR7Sessions\Storageless\Http\SessionMiddleware;
 use PSR7Sessions\Storageless\Session\SessionInterface;
 use Ramsey\Uuid\Uuid;
@@ -18,9 +19,9 @@ use Zend\Diactoros\ServerRequest;
 /**
  * @covers \App\Action\CheckOutAction
  */
-final class CheckOutActionTest extends \PHPUnit_Framework_TestCase
+final class CheckOutActionTest extends TestCase
 {
-    public function testResponseIs404WhenBookNotFoundThrown()
+    public function testResponseIs404WhenBookNotFoundThrown() : void
     {
         $uuid = Uuid::uuid4();
 
@@ -48,7 +49,7 @@ final class CheckOutActionTest extends \PHPUnit_Framework_TestCase
         self::assertSame(404, $response->getStatusCode());
     }
 
-    public function testResponseIs423WhenBookAlreadyCheckedOut()
+    public function testResponseIs423WhenBookAlreadyCheckedOut() : void
     {
         $book = Book::fromName('foo');
         $book->checkOut();
@@ -73,7 +74,7 @@ final class CheckOutActionTest extends \PHPUnit_Framework_TestCase
         self::assertSame(423, $response->getStatusCode());
     }
 
-    public function testResponseIs200WhenBookSuccessfullyCheckedOut()
+    public function testResponseIs200WhenBookSuccessfullyCheckedOut() : void
     {
         $book = Book::fromName('foo');
 

@@ -7,11 +7,12 @@ use App\Entity\Book;
 use App\Service\Book\DoctrineFindBookByUuid;
 use App\Service\Book\Exception\BookNotFound;
 use Doctrine\Common\Persistence\ObjectRepository;
+use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
-class DoctrineFindBookByUuidTest extends \PHPUnit_Framework_TestCase
+class DoctrineFindBookByUuidTest extends TestCase
 {
-    public function testExceptionIsThrownWhenRepositoryReturnsNull()
+    public function testExceptionIsThrownWhenRepositoryReturnsNull() : void
     {
         $uuid = Uuid::uuid4();
 
@@ -24,7 +25,7 @@ class DoctrineFindBookByUuidTest extends \PHPUnit_Framework_TestCase
         $findBook->__invoke($uuid);
     }
 
-    public function testBookIsReturned()
+    public function testBookIsReturned() : void
     {
         $book = Book::fromName('foo');
         $uuid = $book->getId();

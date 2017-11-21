@@ -6,6 +6,7 @@ namespace AppTest\Middleware;
 use App\Middleware\FlushingMiddleware;
 use Doctrine\ORM\EntityManagerInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
@@ -14,9 +15,9 @@ use Zend\Diactoros\ServerRequest;
 /**
  * @covers \App\Middleware\FlushingMiddleware
  */
-final class FlushingMiddlewareTest extends \PHPUnit_Framework_TestCase
+final class FlushingMiddlewareTest extends TestCase
 {
-    public function testEntityManagerIsFlushedWhenOpen()
+    public function testEntityManagerIsFlushedWhenOpen() : void
     {
         /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
@@ -41,7 +42,7 @@ final class FlushingMiddlewareTest extends \PHPUnit_Framework_TestCase
         ));
     }
 
-    public function testNothingHappensWhenEntityManagerIsClosed()
+    public function testNothingHappensWhenEntityManagerIsClosed() : void
     {
         /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);

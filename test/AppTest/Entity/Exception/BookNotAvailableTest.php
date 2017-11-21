@@ -5,13 +5,14 @@ namespace AppTest\Entity\Exception;
 
 use App\Entity\Book;
 use App\Entity\Exception\BookNotAvailable;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Exception\BookNotAvailable
  */
-final class BookNotAvailableTest extends \PHPUnit_Framework_TestCase
+final class BookNotAvailableTest extends TestCase
 {
-    public function testFromUuid()
+    public function testFromUuid() : void
     {
         $exception = BookNotAvailable::fromBook(Book::fromName('foo'));
 

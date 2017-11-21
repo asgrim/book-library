@@ -5,13 +5,14 @@ namespace AppTest\Entity\Exception;
 
 use App\Entity\Book;
 use App\Entity\Exception\BookAlreadyStocked;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Exception\BookAlreadyStocked
  */
-final class BookAlreadyStockedTest extends \PHPUnit_Framework_TestCase
+final class BookAlreadyStockedTest extends TestCase
 {
-    public function testFromUuid()
+    public function testFromUuid() : void
     {
         $exception = BookAlreadyStocked::fromBook(Book::fromName('foo'));
 

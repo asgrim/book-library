@@ -6,26 +6,27 @@ namespace AppTest\Entity\Exception;
 use App\Entity\Book;
 use App\Entity\Exception\BookAlreadyStocked;
 use App\Entity\Exception\BookNotAvailable;
+use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
 /**
  * @covers \App\Entity\Book
  */
-final class BookTest extends \PHPUnit_Framework_TestCase
+final class BookTest extends TestCase
 {
-    public function testIdReturnsValidUuidString()
+    public function testIdReturnsValidUuidString() : void
     {
         $book = Book::fromName('foo');
         self::assertSame($book->getId(), (string)Uuid::fromString($book->getId()));
     }
 
-    public function testGetName()
+    public function testGetName() : void
     {
         $book = Book::fromName('foo');
         self::assertSame('foo', $book->getName());
     }
 
-    public function testExceptionIsThrownWhenBookCheckedOutTwice()
+    public function testExceptionIsThrownWhenBookCheckedOutTwice() : void
     {
         $book = Book::fromName('foo');
 
@@ -34,7 +35,7 @@ final class BookTest extends \PHPUnit_Framework_TestCase
         $book->checkOut();
     }
 
-    public function testExceptionIsThrownWhenBookCheckedInTwice()
+    public function testExceptionIsThrownWhenBookCheckedInTwice() : void
     {
         $book = Book::fromName('foo');
 
@@ -43,12 +44,13 @@ final class BookTest extends \PHPUnit_Framework_TestCase
         $book->checkIn();
     }
 
-    public function testBookCanBeCheckedOutAndBackIn()
+    public function testBookCanBeCheckedOutAndBackIn() : void
     {
         $book = Book::fromName('foo');
+        self::assertTrue($book->isInStock());
         $book->checkOut();
+        self::assertFalse($book->isInStock());
         $book->checkIn();
-        $book->checkOut();
-        $book->checkIn();
+        self::assertTrue($book->isInStock());
     }
 }

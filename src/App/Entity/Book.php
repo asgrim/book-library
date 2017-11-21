@@ -55,10 +55,9 @@ class Book
     }
 
     /**
-     * @return void
      * @throws \App\Entity\Exception\BookNotAvailable
      */
-    public function checkOut()
+    public function checkOut() : void
     {
         if (!$this->inStock) {
             throw Exception\BookNotAvailable::fromBook($this);
@@ -68,15 +67,19 @@ class Book
     }
 
     /**
-     * @return void
      * @throws \App\Entity\Exception\BookAlreadyStocked
      */
-    public function checkIn()
+    public function checkIn() : void
     {
         if ($this->inStock) {
             throw Exception\BookAlreadyStocked::fromBook($this);
         }
 
         $this->inStock = true;
+    }
+
+    public function isInStock() : bool
+    {
+        return $this->inStock;
     }
 }
