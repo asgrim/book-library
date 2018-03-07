@@ -2,7 +2,7 @@
 
 Simply a demo application built using Expressive that I use in my talks.
 
-Requires PHP 7.1+.
+Requires PHP 7.2+.
 
 ## Usage
 
