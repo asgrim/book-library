@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use ContainerInteropDoctrine\EntityManagerFactory;
+use Doctrine\ORM\EntityManagerInterface;
 use PSR7Sessions\Storageless\Http\SessionMiddleware;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
@@ -23,6 +25,7 @@ final class ConfigProvider
     {
         return [
             'factories'  => [
+                EntityManagerInterface::class => EntityManagerFactory::class,
                 Handler\CheckOutHandler::class => Handler\CheckOutHandlerFactory::class,
                 Handler\CheckInHandler::class => Handler\CheckInHandlerFactory::class,
                 Middleware\AuthenticationMiddleware::class => InvokableFactory::class,

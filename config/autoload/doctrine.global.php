@@ -2,11 +2,6 @@
 declare(strict_types = 1);
 
 return [
-    'dependencies' => [
-        'factories' => [
-            Doctrine\ORM\EntityManagerInterface::class => ContainerInteropDoctrine\EntityManagerFactory::class,
-        ],
-    ],
     'doctrine' => [
         'connection' => [
             'orm_default' => [
