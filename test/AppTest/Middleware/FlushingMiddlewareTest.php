@@ -5,10 +5,10 @@ namespace AppTest\Middleware;
 
 use App\Middleware\FlushingMiddleware;
 use Doctrine\ORM\EntityManagerInterface;
-use Interop\Http\ServerMiddleware\DelegateInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
 
@@ -27,14 +27,14 @@ final class FlushingMiddlewareTest extends TestCase
         $expectedResponse = new Response();
         self::assertSame($expectedResponse, (new FlushingMiddleware($entityManager))->process(
             new ServerRequest(),
-            new class ($expectedResponse) implements DelegateInterface {
+            new class ($expectedResponse) implements RequestHandlerInterface {
                 private $fakeResponse;
                 public function __construct(ResponseInterface $fakeResponse)
                 {
                     $this->fakeResponse = $fakeResponse;
                 }
 
-                public function process(ServerRequestInterface $request)
+                public function handle(ServerRequestInterface $request): ResponseInterface
                 {
                     return $this->fakeResponse;
                 }
@@ -52,14 +52,14 @@ final class FlushingMiddlewareTest extends TestCase
         $expectedResponse = new Response();
         self::assertSame($expectedResponse, (new FlushingMiddleware($entityManager))->process(
             new ServerRequest(),
-            new class ($expectedResponse) implements DelegateInterface {
+            new class ($expectedResponse) implements RequestHandlerInterface {
                 private $fakeResponse;
                 public function __construct(ResponseInterface $fakeResponse)
                 {
                     $this->fakeResponse = $fakeResponse;
                 }
 
-                public function process(ServerRequestInterface $request)
+                public function handle(ServerRequestInterface $request): ResponseInterface
                 {
                     return $this->fakeResponse;
                 }

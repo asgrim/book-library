@@ -2,20 +2,21 @@
 declare(strict_types=1);
 
 // Delegate static file requests back to the PHP built-in webserver
-if (php_sapi_name() === 'cli-server'
-    && is_file(__DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))
-) {
+if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
     return false;
 }
 
 chdir(dirname(__DIR__));
 require __DIR__ . '/../vendor/autoload.php';
 
-/** @var \Interop\Container\ContainerInterface $container */
-$container = require __DIR__ . '/../config/container.php';
+(function () {
+    /** @var \Interop\Container\ContainerInterface $container */
+    $container = require __DIR__ . '/../config/container.php';
 
-/** @var \Zend\Expressive\Application $app */
-$app = $container->get(\Zend\Expressive\Application::class);
-require 'config/pipeline.php';
-require 'config/routes.php';
-$app->run();
+    /** @var \Zend\Expressive\Application $app */
+    $app = $container->get(\Zend\Expressive\Application::class);
+    $factory = $container->get(\Zend\Expressive\MiddlewareFactory::class);
+    (require __DIR__ . '/../config/pipeline.php')($app, $factory, $container);
+    (require __DIR__ . '/../config/routes.php')($app, $factory, $container);
+    $app->run();
+})();

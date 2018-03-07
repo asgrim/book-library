@@ -3,19 +3,23 @@ declare(strict_types = 1);
 
 namespace App\Middleware;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\JsonResponse;
 
 class ErrorCatchingMiddleware implements MiddlewareInterface
 {
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate) : ResponseInterface
+    /**
+     * {@inheritDoc}
+     * @throws \InvalidArgumentException
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $requestHandler) : ResponseInterface
     {
         // Hide more of this stuff in production; maybe have a debug flag passed to the constructor here
         try {
-            return $delegate->process($request);
+            return $requestHandler->handle($request);
         } catch (\Throwable $throwable) {
             return new JsonResponse(
                 [

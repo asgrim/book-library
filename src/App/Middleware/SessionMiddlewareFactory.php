@@ -5,9 +5,9 @@ namespace App\Middleware;
 
 use Dflydev\FigCookies\SetCookie;
 use Interop\Container\ContainerInterface;
+use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Parser;
 use PSR7Sessions\Storageless\Http\SessionMiddleware;
-use PSR7Sessions\Storageless\Time\SystemCurrentTime;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Lcobucci\JWT\Signer;
 
@@ -34,7 +34,7 @@ final class SessionMiddlewareFactory implements FactoryInterface
                 ->withPath('/'),
             new Parser(),
             $expirationTime,
-            new SystemCurrentTime()
+            new SystemClock()
         );
     }
 }
