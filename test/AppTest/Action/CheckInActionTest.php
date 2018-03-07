@@ -8,8 +8,8 @@ use App\Entity\Book;
 use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Interop\Http\ServerMiddleware\DelegateInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Server\RequestHandlerInterface;
 use PSR7Sessions\Storageless\Http\SessionMiddleware;
 use PSR7Sessions\Storageless\Session\SessionInterface;
 use Ramsey\Uuid\Uuid;
@@ -42,7 +42,7 @@ final class CheckInActionTest extends TestCase
             (new ServerRequest(['/']))
                 ->withAttribute('id', $uuid)
                 ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
-            $this->createMock(DelegateInterface::class)
+            $this->createMock(RequestHandlerInterface::class)
         );
 
         self::assertInstanceOf(Response\JsonResponse::class, $response);
@@ -66,7 +66,7 @@ final class CheckInActionTest extends TestCase
             (new ServerRequest(['/']))
                 ->withAttribute('id', $book->getId())
                 ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
-            $this->createMock(DelegateInterface::class)
+            $this->createMock(RequestHandlerInterface::class)
         );
 
         self::assertInstanceOf(Response\JsonResponse::class, $response);
@@ -91,7 +91,7 @@ final class CheckInActionTest extends TestCase
             (new ServerRequest(['/']))
                 ->withAttribute('id', $book->getId())
                 ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
-            $this->createMock(DelegateInterface::class)
+            $this->createMock(RequestHandlerInterface::class)
         );
 
         self::assertInstanceOf(Response\JsonResponse::class, $response);

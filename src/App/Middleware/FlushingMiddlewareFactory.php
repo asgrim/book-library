@@ -11,6 +11,12 @@ use Interop\Container\ContainerInterface;
  */
 final class FlushingMiddlewareFactory
 {
+    /**
+     * @param ContainerInterface $container
+     * @return FlushingMiddleware
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function __invoke(ContainerInterface $container) : FlushingMiddleware
     {
         return new FlushingMiddleware(

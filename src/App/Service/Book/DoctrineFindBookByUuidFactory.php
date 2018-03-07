@@ -12,6 +12,12 @@ use Interop\Container\ContainerInterface;
  */
 final class DoctrineFindBookByUuidFactory
 {
+    /**
+     * @param ContainerInterface $container
+     * @return callable
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function __invoke(ContainerInterface $container) : callable
     {
         return new DoctrineFindBookByUuid($container->get(EntityManagerInterface::class)->getRepository(Book::class));

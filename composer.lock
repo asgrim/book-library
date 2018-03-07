@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4190a001d8826c8801872e62e5e74032",
+    "content-hash": "bffc44c9710de0760ade89aee54ad3b7",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1620,6 +1620,59 @@
                 "shim"
             ],
             "time": "2018-01-30T19:27:44+00:00"
+        },
+        {
+            "name": "zendframework/zend-config-aggregator",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-config-aggregator.git",
+                "reference": "46460b25c09fb572f807a00cf9dfe9c466792a76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-config-aggregator/zipball/46460b25c09fb572f807a00cf9dfe9c466792a76",
+                "reference": "46460b25c09fb572f807a00cf9dfe9c466792a76",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "zendframework/zend-stdlib": "^2.7.7 || ^3.1.0"
+            },
+            "require-dev": {
+                "malukenho/docheader": "^0.1.5",
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^5.7.21 || ^6.3",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-config": "^2.6 || ^3.0",
+                "zendframework/zend-servicemanager": "^2.7.7 || ^3.1.1"
+            },
+            "suggest": {
+                "zendframework/zend-config": "Allows loading configuration from XML, INI, YAML, and JSON files"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev",
+                    "dev-develop": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\ConfigAggregator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Lightweight library for collecting and merging configuration from different sources",
+            "keywords": [
+                "ZendFramework",
+                "config-aggregator",
+                "zf"
+            ],
+            "time": "2018-02-26T16:46:30+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",

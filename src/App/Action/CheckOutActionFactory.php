@@ -12,6 +12,12 @@ use Interop\Container\ContainerInterface;
  */
 final class CheckOutActionFactory
 {
+    /**
+     * @param ContainerInterface $container
+     * @return CheckOutAction
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function __invoke(ContainerInterface $container) : CheckOutAction
     {
         return new CheckOutAction(
