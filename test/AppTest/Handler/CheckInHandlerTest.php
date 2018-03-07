@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace AppTest\Action;
+namespace AppTest\Handler;
 
-use App\Action\CheckOutAction;
+use App\Handler\CheckInHandler;
 use App\Entity\Book;
 use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
@@ -17,11 +17,11 @@ use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
 
 /**
- * @covers \App\Action\CheckOutAction
+ * @covers \App\Handler\CheckInHandler
  */
-final class CheckOutActionTest extends TestCase
+final class CheckInHandlerTest extends TestCase
 {
-    public function testResponseIs404WhenBookNotFoundThrown() : void
+    public function testResponseIs404WhenBookAlreadyStockedThrown() : void
     {
         $uuid = Uuid::uuid4();
 
@@ -35,10 +35,10 @@ final class CheckOutActionTest extends TestCase
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager->expects(self::never())->method('transactional');
 
-        $action = new CheckOutAction($findBookByUuid, $entityManager);
+        $handler = new CheckInHandler($findBookByUuid, $entityManager);
 
         /** @var Response\JsonResponse $response */
-        $response = $action->process(
+        $response = $handler->process(
             (new ServerRequest(['/']))
                 ->withAttribute('id', $uuid)
                 ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
@@ -49,10 +49,9 @@ final class CheckOutActionTest extends TestCase
         self::assertSame(404, $response->getStatusCode());
     }
 
-    public function testResponseIs423WhenBookAlreadyCheckedOut() : void
+    public function testResponseIs423WhenBookAlreadyCheckedIn() : void
     {
         $book = Book::fromName('foo');
-        $book->checkOut();
 
         $findBookByUuid = $this->createMock(FindBookByUuidInterface::class);
         $findBookByUuid->expects(self::once())->method('__invoke')->with($book->getId())->willReturn($book);
@@ -60,10 +59,10 @@ final class CheckOutActionTest extends TestCase
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager->expects(self::once())->method('transactional')->willReturnCallback('call_user_func');
 
-        $action = new CheckOutAction($findBookByUuid, $entityManager);
+        $handler = new CheckInHandler($findBookByUuid, $entityManager);
 
         /** @var Response\JsonResponse $response */
-        $response = $action->process(
+        $response = $handler->process(
             (new ServerRequest(['/']))
                 ->withAttribute('id', $book->getId())
                 ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),
@@ -77,6 +76,7 @@ final class CheckOutActionTest extends TestCase
     public function testResponseIs200WhenBookSuccessfullyCheckedOut() : void
     {
         $book = Book::fromName('foo');
+        $book->checkOut();
 
         $findBookByUuid = $this->createMock(FindBookByUuidInterface::class);
         $findBookByUuid->expects(self::once())->method('__invoke')->with($book->getId())->willReturn($book);
@@ -84,10 +84,10 @@ final class CheckOutActionTest extends TestCase
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager->expects(self::once())->method('transactional')->willReturnCallback('call_user_func');
 
-        $action = new CheckOutAction($findBookByUuid, $entityManager);
+        $handler = new CheckInHandler($findBookByUuid, $entityManager);
 
         /** @var Response\JsonResponse $response */
-        $response = $action->process(
+        $response = $handler->process(
             (new ServerRequest(['/']))
                 ->withAttribute('id', $book->getId())
                 ->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $this->createMock(SessionInterface::class)),

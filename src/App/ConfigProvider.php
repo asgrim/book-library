@@ -23,8 +23,8 @@ final class ConfigProvider
     {
         return [
             'factories'  => [
-                Action\CheckOutAction::class => Action\CheckOutActionFactory::class,
-                Action\CheckInAction::class => Action\CheckInActionFactory::class,
+                Handler\CheckOutHandler::class => Handler\CheckOutHandlerFactory::class,
+                Handler\CheckInHandler::class => Handler\CheckInHandlerFactory::class,
                 Middleware\AuthenticationMiddleware::class => InvokableFactory::class,
                 Middleware\ErrorCatchingMiddleware::class => InvokableFactory::class,
                 Service\Book\FindBookByUuidInterface::class => Service\Book\DoctrineFindBookByUuidFactory::class,

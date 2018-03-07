@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Action;
+namespace App\Handler;
 
-use App\Entity\Exception\BookNotAvailable;
+use App\Entity\Exception\BookAlreadyStocked;
 use App\Service\Book\Exception\BookNotFound;
 use App\Service\Book\FindBookByUuidInterface;
 use App\Service\GetIncrementedCounterFromRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 use Zend\Diactoros\Response\JsonResponse;
 
-final class CheckOutAction implements MiddlewareInterface
+final class CheckInHandler implements MiddlewareInterface
 {
     /**
      * @var FindBookByUuidInterface
@@ -49,14 +49,14 @@ final class CheckOutAction implements MiddlewareInterface
 
         try {
             $this->entityManager->transactional(function () use ($book) {
-                $book->checkOut();
+                $book->checkIn();
             });
-        } catch (BookNotAvailable $bookNotAvailable) {
-            return new JsonResponse(['info' => $bookNotAvailable->getMessage(), 'counter' => $counter], 423);
+        } catch (BookAlreadyStocked $bookAlreadyStocked) {
+            return new JsonResponse(['info' => $bookAlreadyStocked->getMessage(), 'counter' => $counter], 423);
         }
 
         return new JsonResponse([
-            'info' => sprintf('You have checked out %s', $book->getName()),
+            'info' => sprintf('You have checked in %s', $book->getName()),
             'counter' => $counter,
         ]);
     }
