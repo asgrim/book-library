@@ -17,12 +17,14 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->pipe(\Zend\Expressive\Router\Middleware\PathBasedRoutingMiddleware::class);
 
     // The following handle routing failures for common conditions:
-    // - method not allowed
     // - HEAD request but no routes answer that method
     // - OPTIONS request but no routes answer that method
-    $app->pipe(\Zend\Expressive\Router\Middleware\MethodNotAllowedMiddleware::class);
+    // - method not allowed
+    // Order here matters; the MethodNotAllowedMiddleware should be placed
+    // after the Implicit*Middleware.
     $app->pipe(\Zend\Expressive\Router\Middleware\ImplicitHeadMiddleware::class);
     $app->pipe(\Zend\Expressive\Router\Middleware\ImplicitOptionsMiddleware::class);
+    $app->pipe(\Zend\Expressive\Router\Middleware\MethodNotAllowedMiddleware::class);
 
     // Seed the UrlHelper with the routing results:
     $app->pipe(\Zend\Expressive\Helper\UrlHelperMiddleware::class);
