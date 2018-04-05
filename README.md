@@ -9,6 +9,8 @@ Requires PHP 7.2+ and a PostgreSQL server.
 ```bash
 $ git clone git@github.com:asgrim/book-library.git
 $ cd book-library
+$ cp config/autoload/local.php.dist config/autoload/local.php
+# Then modify local.php to your needs!
 $ composer install
 $ composer serve
 ```
